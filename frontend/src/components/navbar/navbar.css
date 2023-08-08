@@ -1,0 +1,13 @@
+.input-group{
+    width: 250px;
+    margin-left: auto;
+}
+.bgNav{
+    background-image: linear-gradient(to right,#FFEADD,#FCAEAE,#FF8989,#FF6666);
+}
+.nav-link:hover{
+    color: aliceblue;
+}
+.navbar-toggler:focus{
+    box-shadow: none;
+}

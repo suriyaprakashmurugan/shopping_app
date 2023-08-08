@@ -1,0 +1,37 @@
+.cart_Items{
+    border: 1px solid rgb(185, 182, 182);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: white;
+}
+.cart_Items > img {
+    height: 115px;
+    padding: 15px;
+}
+.sub-but{
+    padding: 0px 6px;
+    outline: none;
+    color: white;
+    border: 1px solid #445590;
+    background-color: #109be5;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+.count-but{
+    width: 50px;
+    outline: none;
+    border: 1px solid rgb(184, 184, 184);
+}
+.add-but{
+    padding: 0px 4px;
+    outline: none;
+    color: white;
+    border: 1px solid #445590;
+    background-color: #109be5;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.rate{
+    padding-left: 0px;
+    margin-left: auto;
+}

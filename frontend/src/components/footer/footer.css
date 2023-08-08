@@ -1,0 +1,22 @@
+.footer{
+    background-color: #23344e;
+    padding-top: 50px;
+}
+.footer_top{
+    border-bottom: 1px solid white;
+    padding-bottom: 50px;
+}
+.footer_head{
+    color: rgb(216, 217, 218);
+    padding-bottom: 5px;
+}
+.footer_list{
+    list-style: none;
+    color: rgb(214, 214, 214);
+    font-size: 14px;
+}
+.footer_soc{
+    color: aliceblue;
+    list-style: none;
+    padding: 10px 0px;
+}

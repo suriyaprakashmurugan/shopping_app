@@ -1,0 +1,8 @@
+.table{
+    font-size: 12px !important;
+}
+.disc{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
