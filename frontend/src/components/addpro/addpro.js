@@ -55,8 +55,8 @@ const AddPro = ({isEdit}) => {
     }
   };
   return (
-    <div className="container">
-      {isEdit ?<h4>Edit Product</h4>:<h4>Add Product</h4>}
+    <div className="container card my-5">
+      {isEdit ?<h4 className="py-3">Edit Product</h4>:<h4 className="py-3">Add Product</h4>}
       <form class="row g-3 needs-validation" onSubmit={(e) => handleSubmit(e)}>
         <div class="col-md-6">
           <label class="form-label">Product name</label>
@@ -102,7 +102,7 @@ const AddPro = ({isEdit}) => {
             required
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label class="form-label">Rating</label>
           <input
             value={edited?.rating}
@@ -113,7 +113,7 @@ const AddPro = ({isEdit}) => {
             required
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label class="form-label">Rate</label>
           <input
             value={edited?.rate}
@@ -124,7 +124,7 @@ const AddPro = ({isEdit}) => {
             required
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label class="form-label">Discount</label>
           <input
             value={edited?.discount}
@@ -135,7 +135,7 @@ const AddPro = ({isEdit}) => {
             required
           />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label class="form-label">No of Items</label>
           <input
             value={edited?.count}
@@ -146,7 +146,7 @@ const AddPro = ({isEdit}) => {
             required
           />
         </div>
-        <div class="col-6">
+        <div class="col-4 offset-8 d-flex justify-content-end">
           <button class="btn btn-primary me-3 w-25 my-2" type="submit">
             {isEdit?'Ok':'Add'}
           </button>

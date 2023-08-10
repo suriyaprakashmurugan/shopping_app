@@ -5,10 +5,5 @@ body{
 }
 
 .page{
-    background-color: rgb(230, 230, 230);
-}
-.banner{
-    width: 80% !important;
-    height: 260px;
-    overflow: hidden;
+    background-color: rgb(255, 255, 255);
 }

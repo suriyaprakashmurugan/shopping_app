@@ -9,8 +9,8 @@
     background-color: white;
 }
 .card_cate{
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     border: none;
     cursor:pointer;
 }
@@ -22,8 +22,14 @@
     /* transition-delay: 1000ms; */
 }
 .card_cate_title{
+    padding-top: 5px;
     color: rgb(245, 172, 90);
 }
 .carousel{
     width: 97%;
+}
+.banner{
+    margin: 50px 0px;
+    height: 300px;
+    overflow: hidden;
 }

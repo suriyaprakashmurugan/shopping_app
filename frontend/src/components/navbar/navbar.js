@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./navbar.css";
+import Searchbar from "../../components/search/searchbar";
 
 function Navbar() {
   return (
     <div className="container-fluid bgNav">
       <div className="container">
         <nav className="navbar navbar-expand-sm align-middle">
-          <a className="navbar-brand fs-4 fw-bold" href="#">
+          <a className="navbar-brand fs-3 fw-bold com-brand" href="#">
             JOY
           </a>
           <button
@@ -71,18 +72,19 @@ function Navbar() {
                 </Link>
               </li>
             </ul>
-            <div className="input-group">
+            {/* <div className="input-group">
               <input
                 type="text"
-                className="form-control"
+                className="form-control p-2"
                 placeholder="Search"
               />
               <div className="input-group-btn">
-                <button className="btn btn-primary" type="submit">
+                <button className="btn bg-light" type="submit">
                   <i className="fa-solid fa-magnifying-glass"></i>
                 </button>
               </div>
-            </div>
+            </div> */}
+            <Searchbar/>
           </div>
         </nav>
       </div>

@@ -1,14 +1,13 @@
-import React from 'react';
-import Content from '../../components/content/content';
-import Products from '../../components/products/products';
+import React from "react";
+import Content from "../../components/content/content";
 
 function Home() {
+
   return (
     <div>
-      <Content/>
-      <Products/>
+      <Content />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
