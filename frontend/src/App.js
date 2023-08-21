@@ -10,6 +10,9 @@ import Edit from "./pages/edit/edit";
 import Dashboard from "./pages/dashboard/dashboard";
 import AddProduct from "./pages/add/add";
 import ProductPage from "./pages/product/products"
+import Signup from "./components/signup/signup";
+import Registerpage from "./pages/login/registerpage";
+import LoginPage from "./pages/login/loginpage";
 
 export const ProductsContext = createContext();
 
@@ -37,7 +40,9 @@ function App() {
         <Router>
           <Navbar />
           <Routes>
-            <Route exact path="/" element={<Home/>}></Route>
+            <Route exact path="/signin" element={<LoginPage/>}></Route>
+            <Route exact path="/register" element={<Registerpage/>}></Route>
+            <Route exact path="/home" element={<Home/>}></Route>
             <Route exact path="/cart" element={<Cart/>}></Route>
             <Route exact path="/edit/:id" element={<Edit/>}></Route>
             <Route exact path="/dashborad" element={<Dashboard/>}></Route>

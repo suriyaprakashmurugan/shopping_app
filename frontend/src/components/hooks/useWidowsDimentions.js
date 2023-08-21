@@ -26,7 +26,6 @@ function useWindowDimensions() {
     }
   }, [hasWindow]);
 
-  console.log(windowDimensions)
   return windowDimensions;
 }
 

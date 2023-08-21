@@ -1,0 +1,8 @@
+.sign{
+    background-image: url(../../../public/pexels-karolina-grabowska-5632398.jpg);
+    background-size: cover;
+    height: 100vh;
+}
+.form-control{
+    opacity: 40%;
+}

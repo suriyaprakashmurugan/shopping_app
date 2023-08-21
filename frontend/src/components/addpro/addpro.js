@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Upload from "../upload/upload";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 
-const AddPro = ({isEdit}) => {
+const AddPro = ({ isEdit }) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const id = parseInt(location.pathname.split("/")[2]);
   const [edited, setEdited] = useState(null);
+  const [upImage, setUpImage] = useState("");
   const [product, setProduct] = useState({
     productName: "",
     img: "",
@@ -18,46 +21,71 @@ const AddPro = ({isEdit}) => {
   });
 
   const handleChange = (e) => {
-    if(isEdit){
-        setEdited(pre=>({...pre,[e.target.name]:e.target.value}));
+    if (isEdit) {
+      setEdited((pre) => ({ ...pre, [e.target.name]: e.target.value }));
     }
     setProduct((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(isEdit){
-        try {
-            await axios.put("http://localhost:8080/edit/"+id, edited);
-            console.log(edited)
-        } catch (error) {
-            console.log(error)
+    if (isEdit) {
+      edited.img = upImage;
+      try {
+        const res = await axios.put("http://localhost:8080/edit/" + id, edited);
+        if (res.data === "updated successfully") {
+          setEdited({
+            productName: "",
+            img: "",
+            count: null,
+            category: "",
+            discription: "",
+            rating: null,
+            rate: null,
+            discount: null,
+          });
+          navigate('/dashborad')
         }
-    }else{
-        try {
-            await axios.post("http://localhost:8080/add", product);
-          } catch (error) {
-            console.log(error);
-          }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      product.img = upImage;
+      try {
+        await axios.post("http://localhost:8080/add", product);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   useEffect(() => {
-    getEditData();
+    if (isEdit) {
+      getEditData();
+    }
   }, []);
 
   const getEditData = async () => {
     try {
-      const res = await axios.post("http://localhost:8080/edit/"+id);
-        setEdited(res.data[0]);
+      const res = await axios.post("http://localhost:8080/edit/" + id);
+      setEdited(res.data[0]);
+      setUpImage(res.data[0].img);
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <div className="container card my-5">
-      {isEdit ?<h4 className="py-3">Edit Product</h4>:<h4 className="py-3">Add Product</h4>}
-      <form class="row g-3 needs-validation" onSubmit={(e) => handleSubmit(e)}>
+      {isEdit ? (
+        <h4 className="py-3">Edit Product</h4>
+      ) : (
+        <h4 className="py-3">Add Product</h4>
+      )}
+      <form
+        class="row g-3 needs-validation"
+        onSubmit={(e) => handleSubmit(e)}
+        encType="multipart/form-data"
+      >
         <div class="col-md-6">
           <label class="form-label">Product name</label>
           <input
@@ -70,15 +98,7 @@ const AddPro = ({isEdit}) => {
           />
         </div>
         <div class="col-md-6">
-          <label class="form-label">Image URL</label>
-          <input
-            value={edited?.img}
-            type="text"
-            class="form-control"
-            name="img"
-            onChange={(e) => handleChange(e)}
-            required
-          />
+          <Upload setImage={setUpImage} editImage={upImage} fieldName={"img"} />
         </div>
         <div class="col-md-6">
           <label class="form-label">Category</label>
@@ -148,7 +168,7 @@ const AddPro = ({isEdit}) => {
         </div>
         <div class="col-4 offset-8 d-flex justify-content-end">
           <button class="btn btn-primary me-3 w-25 my-2" type="submit">
-            {isEdit?'Ok':'Add'}
+            {isEdit ? "Ok" : "Add"}
           </button>
           <button class="btn btn-primary w-25 my-2" type="reset">
             Cancel

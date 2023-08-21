@@ -82,7 +82,7 @@ const Products = () => {
                     key={item.productid}
                   >
                     <img
-                      src={item.img}
+                      src={`http://localhost:8080/${item.img}`}
                       className="card-img-top pro_Img "
                       alt="..."
                     />

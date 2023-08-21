@@ -50,7 +50,7 @@ const Dash = () => {
               </option>
               <option value="electronics">Electronics</option>
               <option value="grocery">Grocery</option>
-              <option value="mobiles">Mobiles</option>
+              <option value="mobile">Mobiles</option>
             </select>
           </div>
           <div className="col-5 d-flex justify-content-end">
