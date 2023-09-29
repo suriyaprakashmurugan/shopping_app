@@ -1,21 +1,35 @@
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const express = require("express");
-const mysql = require("mysql");
 const multer = require("multer");
+const mysql = require("mysql");
 const cors = require("cors");
 const path = require("path");
 
 const app = express();
 
 const db = mysql.createConnection({
+  waitForConnections: true,
+  queueLimit: 0,
   host: "localhost",
-  user: "root",
+  user: "admin",
   password: "password",
   database: "ecom",
+  connectionLimit: 100,
+  debug: true,
+  wait_timeout: 28800,
+  connect_timeout: 10,
 });
 
 app.use(express.json());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 
 app.use("/Images", express.static("./Images"));
 
@@ -53,6 +67,26 @@ const upload = multer({
   },
 }).single("image");
 
+app.post("/products/addwishlist", (req, res) => {
+  const Id = req.body.userId;
+
+  let addQur = "insert into wishlist (userId, list) value (?)";
+  let values = [req.body.userId, req.body.list];
+  db.query(addQur, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("successfully added");
+  });
+});
+
+app.post("/wishlist", (req, res) => {
+  let q = "select list from wishlist where userId = ?";
+  db.query(q, [req.body.userId], (err, data) => {
+    if (err) return res.json(err);
+    // return res.json(data);
+    console.log(data);
+  });
+});
+
 app.post("/upload", upload, (req, res, next) => {
   return res.send(req.file.path);
 });
@@ -81,6 +115,8 @@ app.post("/edit/:id", (req, res) => {
   const q = "select * from products where productid= ?";
   db.query(q, [cate], (err, data) => {
     if (err) return res.json(err);
+    res.header("Access-Control-Allow-Origin");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     return res.json(data);
   });
 });
@@ -132,9 +168,9 @@ app.post("/add", (req, res) => {
 });
 app.post("/register", async (req, res) => {
   const qur = "select userEmail from users where userEmail = ?";
-  const mail = req.body.userEmail; 
+  const mail = req.body.userEmail;
 
-  db.query(qur,[mail], async(err, data) => {
+  db.query(qur, [mail], async (err, data) => {
     if (err) return res.json(err);
     regMail = await data;
     if (regMail.length < 1) {
@@ -154,11 +190,14 @@ app.post("/register", async (req, res) => {
   });
 });
 app.post("/signin", (req, res) => {
-  const q = "select * from users where userEmail= ? and userPassword =?";
-  db.query(q, [req.body.userEmail, req.body.userPPassword], (err, data) => {
+  const q = "select * from users where userEmail= ?";
+  db.query(q, [req.body.userEmail], (err, data) => {
     if (err) return res.json({ Message: "Erro inside the server" });
-    if (data.length > 0) {
-      return res.json({ Login: "true" });
+    if ((data.userPassword = req.body.userPassword)) {
+      const name = data[0].name;
+      const token = jwt.sign({ name }, "Jwt-secret-key", { expiresIn: "1d" });
+      res.cookie("token", token);
+      return res.json({ Login: "true", user: data });
     } else {
       return res.json({ Login: "false" });
     }

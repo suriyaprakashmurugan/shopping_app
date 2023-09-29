@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../common/spinner";
 import "./content.css";
 import { ProductsContext } from "../../App";
 import axios from "axios";
 
 function Content() {
-  const { dispatch, width } = useContext(ProductsContext);
+  const { width } = useContext(ProductsContext);
   const [banner, setBanner] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const categories = [
@@ -43,18 +45,21 @@ function Content() {
   ];
 
   useEffect(() => {
-    const handleSetBanner = async () => {
-      try {
-        const ban = await axios.get("http://localhost:8080/panners");
-        setBanner(ban.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     handleSetBanner();
   }, []);
+  const handleSetBanner = async () => {
+    setLoading(true);
+    try {
+      const ban = await axios.get("http://localhost:8080/panners");
+      setBanner(ban.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false)
+  };
   return (
     <>
+    <Spinner loading={loading}/>
       <div className="content-top container-fluid p-0">
         <div
           id="carouselExampleIndicators"

@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Spinner from "../common/spinner";
 import "./dash.css";
 import { useNavigate, Link } from "react-router-dom";
 
 const Dash = () => {
   const navigate = useNavigate();
   const [cate, setCate] = useState(null);
+  const [selectedCat, setSelectedCat] = useState('');
+  const [loading, setLoading] = useState(false);
   const handleSelect = async (e) => {
+    setSelectedCat(e);
     const cat = e.target.value;
+    setLoading(true);
     try {
       const { data } = await axios.post(
         "http://localhost:8080/products/" + cat
@@ -16,6 +21,7 @@ const Dash = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const handleEdit=(id)=>{
@@ -23,17 +29,19 @@ const Dash = () => {
   }
 
   const handleDelete = async(id)=>{
+    setLoading(true);
     try {
         await axios.delete("http://localhost:8080/dashborad/" + id);
-        // window.location.reload();
-        // handleSelect()
+        handleSelect(selectedCat);
     } catch (error) {
         console.log(error)
     }
+    setLoading(false);
   }
 
   return (
     <div>
+      <Spinner loading={loading}/>
       <div className="container p-5 bg-light">
         <div className="row align-middle">
           <div className="col-1 text-end">
@@ -51,6 +59,9 @@ const Dash = () => {
               <option value="electronics">Electronics</option>
               <option value="grocery">Grocery</option>
               <option value="mobile">Mobiles</option>
+              <option value="fasion">Fasion</option>
+              <option value="furniture">Furniture</option>
+              <option value="appliances">Appliances</option>
             </select>
           </div>
           <div className="col-5 d-flex justify-content-end">

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./sign.css";
+import { ProductsContext } from "../../App";
 
 const Signup = () => {
+  const { userAuth, setUserAuth } = useContext(ProductsContext);
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const handleChange = (e) => {
@@ -12,13 +15,13 @@ const Signup = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/signin", user).then((res) => {
-        if (res.data.Login) {
-          navigate("/home");
-        } else {
-          alert("Not user fount You have to register");
-        }
-      });
+      const val = await axios.post("http://localhost:8080/signin", user);
+      if (val.data.Login) {
+        setUserAuth(val.data.user[0]);
+        navigate("/home");
+      } else {
+        alert("No user fount You have to register");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -49,11 +52,11 @@ const Signup = () => {
           <p class="text-center text-secoundary">- OR -</p>
 
           <div class="form-outline mb-3">
-            <label class="form-label">Email or username</label>
+            <label class="form-label">Email</label>
             <input
               onChange={(e) => handleChange(e)}
               type="email"
-              name="userName"
+              name="userEmail"
               class="form-control"
             />
           </div>

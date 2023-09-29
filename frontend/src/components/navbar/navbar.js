@@ -48,7 +48,7 @@ function Navbar() {
                   <li className="nav-item px-2">
                     <Link
                       className="nav-link fw-bold text-secondary"
-                      to={"/Wishlist"}
+                      to={"/wishlist"}
                     >
                       Wishlist
                     </Link>

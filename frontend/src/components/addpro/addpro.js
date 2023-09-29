@@ -56,6 +56,7 @@ const AddPro = ({ isEdit }) => {
       } catch (error) {
         console.log(error);
       }
+      navigate('/dashborad')
     }
   };
 

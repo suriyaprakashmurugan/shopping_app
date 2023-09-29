@@ -13,6 +13,7 @@ import ProductPage from "./pages/product/products"
 import Signup from "./components/signup/signup";
 import Registerpage from "./pages/login/registerpage";
 import LoginPage from "./pages/login/loginpage";
+import WishListPage from "./pages/wishlistPage/wishlistPage";
 
 export const ProductsContext = createContext();
 
@@ -31,9 +32,10 @@ export const ProductsContext = createContext();
 
 function App() {
   const { height, width } = useWindowDimensions();
+  const [userAuth, setUserAuth] = useState("");
   // const [pro, dispatch] = useReducer(reducer, initialState);
   // const [itemDetails, setItemDetails] = useState([]);
-  const contextValues = { width };
+  const contextValues = { width, userAuth, setUserAuth };
   return (
     <ProductsContext.Provider value={contextValues}>
       <div className="page">
@@ -48,6 +50,7 @@ function App() {
             <Route exact path="/dashborad" element={<Dashboard/>}></Route>
             <Route exact path="/product/:category" element={<ProductPage/>}></Route>
             <Route exact path="/add" element={<AddProduct/>}></Route>
+            <Route exact path="/wishlist" element={<WishListPage/>}></Route>
           </Routes>
           <Footer />
         </Router>
